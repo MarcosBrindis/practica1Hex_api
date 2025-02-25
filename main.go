@@ -18,8 +18,8 @@ func main() {
 	r := gin.Default()
 
 	// Configurar rutas con los controladores globales
-	userRouter.SetupUserRoutes(r, userInfra.CreateUserController, userInfra.UpdateUserController, userInfra.GetUserController, userInfra.DeleteUserController, userInfra.GetAllUsersController)
-	filmhubRouter.SetupFilmHubRoutes(r, filmhubInfra.CreateFilmHubController, filmhubInfra.UpdateFilmHubController, filmhubInfra.GetFilmHubController, filmhubInfra.DeleteFilmHubController, filmhubInfra.GetAllFilmHubController)
+	userRouter.SetupUserRoutes(r, userInfra.CreateUserController, userInfra.UpdateUserController, userInfra.GetUserController, userInfra.DeleteUserController, userInfra.GetAllUsersController, userInfra.UserPollingController, &userInfra.Updates)
+	filmhubRouter.SetupFilmHubRoutes(r, filmhubInfra.CreateFilmHubController, filmhubInfra.UpdateFilmHubController, filmhubInfra.GetFilmHubController, filmhubInfra.DeleteFilmHubController, filmhubInfra.GetAllFilmHubController, filmhubInfra.FilmHubPollingController, &filmhubInfra.Updates)
 
 	// Iniciar el servidor
 	r.Run(":8080")

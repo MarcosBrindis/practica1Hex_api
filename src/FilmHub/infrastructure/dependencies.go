@@ -9,11 +9,13 @@ import (
 )
 
 var (
-	CreateFilmHubController *controller.CreateFilmHubController
-	UpdateFilmHubController *controller.UpdateFilmHubController
-	GetFilmHubController    *controller.GetFilmHubController
-	DeleteFilmHubController *controller.DeleteFilmHubController
-	GetAllFilmHubController *controller.GetAllFilmHubController
+	CreateFilmHubController  *controller.CreateFilmHubController
+	UpdateFilmHubController  *controller.UpdateFilmHubController
+	GetFilmHubController     *controller.GetFilmHubController
+	DeleteFilmHubController  *controller.DeleteFilmHubController
+	GetAllFilmHubController  *controller.GetAllFilmHubController
+	FilmHubPollingController *controller.FilmHubPollingController
+	Updates                  chan bool
 )
 
 func InitDependencies() {
@@ -34,10 +36,16 @@ func InitDependencies() {
 	deleteFilmHubUsecase := application.DeleteFilmHubUsecase{Repository: filmHubRepo}
 	getAllFilmHubUsecase := application.GetAllFilmHubUsecase{Repository: filmHubRepo}
 
+	// Crear el canal de notificaciones
+	Updates = make(chan bool, 1)
+
 	// Crear instancias de los controladores
 	CreateFilmHubController = controller.NewCreateFilmHubController(&createFilmHubUsecase)
 	UpdateFilmHubController = controller.NewUpdateFilmHubController(&updateFilmHubUsecase)
 	GetFilmHubController = controller.NewGetFilmHubController(&getFilmHubUsecase)
 	DeleteFilmHubController = controller.NewDeleteFilmHubController(&deleteFilmHubUsecase)
 	GetAllFilmHubController = controller.NewGetAllFilmHubController(&getAllFilmHubUsecase)
+
+	// Crear controlador de polling
+	FilmHubPollingController = controller.NewFilmHubPollingController(&getAllFilmHubUsecase, &Updates)
 }
