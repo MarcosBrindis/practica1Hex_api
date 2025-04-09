@@ -6,6 +6,7 @@ import (
 	"practica1/src/user/application"
 	repo "practica1/src/user/infrastructure/database/postgres"
 	"practica1/src/user/infrastructure/http/controller"
+	bcryptEnc "practica1/src/user/infrastructure/service"
 )
 
 var (
@@ -28,8 +29,11 @@ func InitDependencies() {
 	// Inicializar el repositorio de usuario
 	userRepo := repo.NewUserRepository(database)
 
+	// Configurar bcrypt
+	encrypter := bcryptEnc.NewBcryptEncrypter(10)
+
 	// Crear los casos de uso
-	createUserUsecase := application.CreateUserUsecase{Repository: userRepo}
+	createUserUsecase := application.CreateUserUsecase{Repository: userRepo, Encrypter: encrypter}
 	updateUserUsecase := application.UpdateUserUsecase{Repository: userRepo}
 	getUserUsecase := application.GetUserUsecase{Repository: userRepo}
 	deleteUserUsecase := application.DeleteUserUsecase{Repository: userRepo}

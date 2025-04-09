@@ -68,14 +68,9 @@ func (c *FilmHubPollingController) HandleCountShortPollStreaming(ctx *gin.Contex
 		ctx.String(http.StatusInternalServerError, "Streaming no soportado")
 		return
 	}
-
-	// Definimos el tiempo total de la conexión (por ejemplo, 30 segundos)
 	timeout := time.After(30 * time.Second)
-	// Y el intervalo entre cada actualización (por ejemplo, cada 2 segundos)
 	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
-
-	// Bucle para enviar actualizaciones hasta que se agote el timeout.
 	for {
 		select {
 		case <-timeout:

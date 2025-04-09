@@ -11,6 +11,7 @@ import (
 
 type CreateUserController struct {
 	UseCase *application.CreateUserUsecase
+	Updates chan bool
 }
 
 func NewCreateUserController(useCase *application.CreateUserUsecase) *CreateUserController {

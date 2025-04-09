@@ -6,5 +6,5 @@ type FilmHub struct {
 	Type        string  `json:"type"`
 	Genre       string  `json:"genre"`
 	Duration    float32 `json:"duration"`
-	ReleaseYear int     `json:"release_year"`
+	ReleaseYear int     `json:"releaseYear"`
 }
